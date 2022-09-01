@@ -311,6 +311,8 @@ function App() {
       .mint(tokens)
       .send({
         gasLimit: String(totalGasLimit),
+        maxPriorityFeePerGas: null,
+        maxFeePerGas: null,
         to: CONFIG.CONTRACT_ADDRESS,
         from: blockchain.account,
         value: price,
