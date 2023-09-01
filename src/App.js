@@ -295,49 +295,54 @@ function App() {
     SHOW_BACKGROUND: false,
   });
 
-  const claimNFTs = () => {
-    let cost = CONFIG.DISPLAY_COST * tokens;
-    let price = Web3.utils.toWei(cost.toString(), 'ether');
-    let gasLimit = CONFIG.GAS_LIMIT;
-    let totalGasLimit = String(gasLimit);
-    console.log("Cost: ", price);
-    console.log("Gas limit: ", totalGasLimit);
-    setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
-    setClaimingNft(true);
-    setbrd("2px solid yellow");
-    setbxsh("0px 0px 3px 0px yellow");
-    toaster.push(mntmessage, { placement })
-    blockchain.smartContract.methods
-      .mint(tokens)
-      .send({
-        gasLimit: String(totalGasLimit),
-        maxPriorityFeePerGas: null,
-        maxFeePerGas: null,
-        to: CONFIG.CONTRACT_ADDRESS,
-        from: blockchain.account,
-        value: price,
-      })
-      .once("error", (err) => {
-        console.log(err);
-        setFeedback("Sorry, something went wrong please try again later.");
-        setClaimingNft(false);
-        toaster.push(errmessage, { placement })
-        setbrd("2px solid red");
-        setbxsh("0px 0px 3px 0px red");
-      })
-      .then((receipt) => {
-        console.log(receipt);
-        setFeedback(
-          `WOW, the ${CONFIG.NFT_NAME} is yours! go visit Opensea.io to view it.`
-        );
-        toaster.push(txmessage, { placement })
-        setbrd("2px solid green");
-        setbxsh("0px 0px 3px 0px green");
-        setClaimingNft(false);
-        dispatch(fetchData(blockchain.account));
-      });
+  const claimNFTs = async () => {
+    try {
+      let cost = CONFIG.DISPLAY_COST * tokens;
+      let price = Web3.utils.toWei(cost.toString(), 'ether');
+  
+      setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
+      setClaimingNft(true);
+      setbrd("2px solid yellow");
+      setbxsh("0px 0px 3px 0px yellow");
+      toaster.push(mntmessage, { placement })
+  
+      const gasEstimate = await blockchain.smartContract.methods
+        .mint(blockchain.account, tokens) // Se asume que el usuario reclama en su propia cuenta
+        .estimateGas({
+          from: blockchain.account,
+          value: price,
+        });
+  
+      const gasPrice = await blockchain.web3.eth.getGasPrice();
+  
+      const tx = await blockchain.smartContract.methods
+        .mint(blockchain.account, tokens) // Se asume que el usuario reclama en su propia cuenta
+        .send({
+          gas: gasEstimate,
+          gasPrice: gasPrice,
+          from: blockchain.account,
+          value: price,
+        });
+  
+      console.log(tx);
+      setFeedback(
+        `Congratulations! The ${CONFIG.NFT_NAME} is now yours! Visit Opensea.io to view it.`
+      );
+      toaster.push(txmessage, { placement })
+      setbrd("2px solid green");
+      setbxsh("0px 0px 3px 0px green");
+      setClaimingNft(false);
+      dispatch(fetchData(blockchain.account));
+    } catch (error) {
+      console.error(error);
+      setFeedback("Sorry, something went wrong. Please try again later.");
+      setClaimingNft(false);
+      toaster.push(errmessage, { placement })
+      setbrd("2px solid red");
+      setbxsh("0px 0px 3px 0px red");
+    }
   };
-
+  
   const decrementtokens = () => {
     let newtokens = tokens - 1;
     if (newtokens < 1) {
@@ -402,7 +407,7 @@ function App() {
               Story
             </s.StyledLink >
             <s.StyledLink href="#sneak">
-               Sneak Peaks
+               Sneaky Meows
               </s.StyledLink>
               <s.StyledLink href="#faq">
                FAQ
@@ -442,7 +447,7 @@ function App() {
 
         <s.Container flex={1} jc={"center"} ai={"center"}>
           <s.TextTitle>
-            Mint Your {CONFIG.NFT_NAME}
+            Mint Yours {CONFIG.NFT_NAME}
           </s.TextTitle>
 
         </s.Container>
@@ -599,17 +604,25 @@ function App() {
             <s.SpacerLarge/>
             <s.TextP>
 
-lorem ipsum
+            "Whispers of the Midnight Guardians: A Tale of the NFT Black Cat Collection"
 <br></br><br></br>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+In the heart of a digital realm, where shadows and art intertwined, emerged the enigmatic NFT Black Cat Collection. Each pixelated masterpiece held a secret, a message only the curious could decipher.
+
+Legend had it that these NFTs were more than just art; they were guardians of unseen paths. As collectors brought them into their virtual galleries, whispers of ancient wisdom echoed through the ethers.
+
+Rumors circulated that those who possessed these NFTs found fortune beyond measure, dispelling the superstition of ill luck. The allure was undeniable—a gateway to breaking free from chains of old beliefs.
 <br></br><br></br>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.            
+One NFT, "Eclipse's Gaze," depicted a black cat gazing at a lunar eclipse. Collectors speculated it held the key to unlocking hidden truths, urging them to explore the unknown with open minds.
+
+As the collection grew, so did the stories. The NFTs whispered tales of moonlit adventures and midnight rendezvous, inspiring all who dared to own them.
+
+Embrace the enigma, defy the odds—these NFTs weren't just pixels; they were conduits of transformation. Step into the world of the NFT Black Cat Collection, where mystery and art coalesced to challenge reality itself.            
 </s.TextP>
             </s.SecContainer>
 
             <s.SecContainer id="sneak">
             <s.TextTitle>
-            Sneak Peaks
+            Sneaky Meows
             </s.TextTitle>
             <s.SpacerLarge/>
             <s.CBOX>
@@ -629,34 +642,34 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
             </s.TextTitle>
             <s.SpacerLarge/>
             <PanelGroup style={{width: "80%", borderColor: "#A9D0D2"}} accordion bordered>
-    <Panel header="what is an nft?" defaultExpanded>
+    <Panel header="What is the AlgorithmX Black Cat NFT Collection?" defaultExpanded>
     <s.TextP style={{textAlign: "left"}}>
-          lorem ipsum dalar valar malar havan huarasf afaxvas fafs
+    The AlgorithmX Black Cat NFT Collection is a unique series of digital artworks celebrating the elegance of black cats. It's associated with AlgorithmX, a privacy-focused project. These NFTs hold a special significance as they offer more than just art—they provide access to future AlgorithmX functionalities and priority in airdrops.
           </s.TextP>
     </Panel>
-    <Panel header="how can i mint">
+    <Panel header="How do I acquire NFTs from the Black Cat Collection?">
     <s.TextP style={{textAlign: "left"}}>
-    lorem ipsum dalar valar malar havan huarasf afaxvas fafs
+    You can acquire NFTs from the Black Cat Collection through participating NFT marketplaces. Look for listings related to AlgorithmX's collection and choose the NFTs that resonate with you.
           </s.TextP>
     </Panel>
-    <Panel header="what is hashlips">
+    <Panel header=" How does owning a Black Cat NFT connect with AlgorithmX?">
     <s.TextP style={{textAlign: "left"}}>
-    lorem ipsum dalar valar malar havan huarasf afaxvas fafs
+    Owning a Black Cat NFT gives you a unique link to AlgorithmX's privacy-focused ecosystem. In the future, holders will enjoy exclusive access to new project features and gain priority in upcoming airdrop events.
           </s.TextP>
     </Panel>
-    <Panel header="what is hashlips">
+    <Panel header="What benefits do Black Cat NFT holders receive within AlgorithmX?">
     <s.TextP style={{textAlign: "left"}}>
-    lorem ipsum dalar valar malar havan huarasf afaxvas fafs
+    Black Cat NFT holders will be granted access to enhanced features and functionalities within the AlgorithmX project. This could include premium privacy tools, advanced data protection, and priority access to project updates.
           </s.TextP>
     </Panel>
-    <Panel header="what is hashlips">
+    <Panel header="Can I trade or sell my Black Cat NFT?">
     <s.TextP style={{textAlign: "left"}}>
-    lorem ipsum dalar valar malar havan huarasf afaxvas fafs
+    Yes, you can trade or sell your Black Cat NFT on compatible NFT marketplaces. The ownership of the NFT can be transferred to others, allowing you to participate in the growing NFT market.
           </s.TextP>
     </Panel>
-    <Panel header="what is hashlips">
+    <Panel header=" How does owning Black Cat NFTs contribute to the AlgorithmX community?">
     <s.TextP style={{textAlign: "left"}}>
-    lorem ipsum dalar valar malar havan huarasf afaxvas fafs
+    Owning Black Cat NFTs not only connects you to AlgorithmX's mission but also strengthens the community. As a holder, you're poised to be an early adopter of new project features and contribute to the growth and success of AlgorithmX's privacy-driven ecosystem.
           </s.TextP>
     </Panel>
   </PanelGroup>
@@ -681,7 +694,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           </s.socialDiv>
           <s.SpacerLarge/>
           <s.TextP>
-          Copyright © 2022 {CONFIG.NFT_NAME}
+          Copyright © 2023 {CONFIG.NFT_NAME}
           </s.TextP>
             </s.SecContainer>
 
