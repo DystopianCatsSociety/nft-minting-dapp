@@ -1,22 +1,21 @@
 {
-  "CONTRACT_ADDRESS": "0xC4b5F4438645Ebb369f0ff86bF041c2947406f89",
-  "SCAN_LINK": "https://polygonscan.com/token/0xC4b5F4438645Ebb369f0ff86bF041c2947406f89",
+  "CONTRACT_ADDRESS": "0xa9bdEA472D90000608419e1981571948550A0239",
+  "SCAN_LINK": "https://etherscan.io/address/0xa9bdEA472D90000608419e1981571948550A0239",
   "NETWORK": {
     "NAME": "Polygon",
-    "SYMBOL": "Matic",
+    "SYMBOL": "MATIC",
     "ID": 137
   },
-  "NFT_NAME": "Dystopian Cats Society",
-  "SYMBOL": "DCS",
-  "MAX_PER_TX" : 5 ,
-  "MAX_SUPPLY": 10000,
-  "WEI_COST": 100000000000000000,
-  "DISPLAY_COST": 1.00,
-  "GAS_LIMIT": 285000,
+  "NFT_NAME": "Black Cats",
+  "SYMBOL": "BC",
+  "MAX_SUPPLY": 444,
+  "DISPLAY_COST": 10,
+  "GAS_LIMIT": 210000,
+  "MAX_PER_TX": 10,
   "MARKETPLACE": "Opeansea",
-  "MARKETPLACE_LINK": "https://opensea.io/collection/nerdy-coder-clones",
+  "MARKETPLACE_LINK": "https://opensea.io/collection/",
   "Telegram": "https://",
   "Discord": "https://",
-  "Twitter": "https://",
-  "SHOW_BACKGROUND": true
+  "Twitter": "https://twitter.com/AlgorithmXlabs",
+  "SHOW_BACKGROUND": false
 }
