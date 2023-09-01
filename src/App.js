@@ -428,7 +428,7 @@ function App() {
           <s.Icons src="/config/images/discord.svg" alt="discord" />
           </a>
           <a href={CONFIG.MARKETPLACE_LINK} target={"_blank"}>
-          <s.Icons src="/config/images/opensea.svg" alt="opensea" />
+          <s.Icons src="/config/images/ax.png" alt="opensea" />
           </a>
           </s.socialDiv>
           <WalletBox>
