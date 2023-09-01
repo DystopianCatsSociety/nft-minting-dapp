@@ -454,7 +454,7 @@ function App() {
     
         <s.SpacerSmall />
         <ResponsiveWrapper flex={1} style={{ padding: 24 }} test>
-        <StyledImg src={"/config/images/11.jpg"} alt="image" />
+        <StyledImg src={"/config/images/11.png"} alt="image" />
         <s.SpacerSmall/>
             <s.Container flex={1} jc={"center"} ai={"center"} >
 
@@ -627,11 +627,11 @@ Embrace the enigma, defy the odds—these NFTs weren't just pixels; they were co
             <s.SpacerLarge/>
             <s.CBOX>
             <Carousel autoplay className="custom-slider">
-    <img src="/config/images/1.jpg" />
-    <img src="/config/images/2.jpg" />
-    <img src="/config/images/3.jpg" />
-    <img src="/config/images/4.jpg" />
-    <img src="/config/images/5.jpg" />
+    <img src="/config/images/1.png" />
+    <img src="/config/images/2.png" />
+    <img src="/config/images/3.png" />
+    <img src="/config/images/4.png" />
+    <img src="/config/images/5.png" />
   </Carousel>
   </s.CBOX>
               </s.SecContainer>
