@@ -680,7 +680,7 @@ Embrace the enigma, defy the odds—these NFTs weren't just pixels; they were co
             <s.SecContainer id="">
                 <s.socialDiv>
           <a href={CONFIG.Telegram} target={"_blank"}>
-          <s.Icons src="/config/images/telegram.svg" alt="telegram" />
+          <s.Icons src="/config/images/Rarible_Logo.png" alt="telegram" />
           </a>
             <a href={CONFIG.Twitter} target={"_blank"}>
           <s.Icons src="/config/images/twitter.svg" alt="twitter" />
@@ -689,7 +689,7 @@ Embrace the enigma, defy the odds—these NFTs weren't just pixels; they were co
           <s.Icons src="/config/images/discord.svg" alt="discord" />
           </a>
           <a href={CONFIG.MARKETPLACE_LINK} target={"_blank"}>
-          <s.Icons src="/config/images/opensea.svg" alt="opensea" />
+          <s.Icons src="/config/images/ax.png" alt="opensea" />
           </a>
           </s.socialDiv>
           <s.SpacerLarge/>
