@@ -9,7 +9,7 @@
   "NFT_NAME": "Black Cats",
   "SYMBOL": "BC",
   "MAX_SUPPLY": 444,
-  "DISPLAY_COST": 10,
+  "DISPLAY_COST": 1,
   "GAS_LIMIT": 210000,
   "MAX_PER_TX": 10,
   "MARKETPLACE": "Opeansea",
